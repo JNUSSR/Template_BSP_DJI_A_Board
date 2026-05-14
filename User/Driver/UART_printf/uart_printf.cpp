@@ -9,6 +9,18 @@
 
 #define UART_TX_HANDLE huart6
 
+/*
+* @brief 对应VOFA+的JustFloat协议，发送一个float数组，末尾添加0x7f800000作为结束标志
+*/
+void vofa_printf(float *data,float num) {
+    HAL_UART_Transmit(&UART_TX_HANDLE, (uint8_t *) data, sizeof(float) * num, HAL_MAX_DELAY);
+    uint8_t tail[4] = {0x00, 0x00, 0x80, 0x7f};
+    HAL_UART_Transmit(&UART_TX_HANDLE, (uint8_t *) tail, sizeof(uint8_t) * 4, HAL_MAX_DELAY);
+}
+
+/*
+* @brief 串口打印函数
+*/
 void uart_printf(const char *format, ...)
 {
     char buffer[128];

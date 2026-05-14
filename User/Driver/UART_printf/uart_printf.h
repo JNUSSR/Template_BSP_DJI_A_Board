@@ -9,6 +9,7 @@
 extern "C"{
 #endif
 
+void vofa_printf(float *data,float num);
 void uart_printf(const char *format, ...);
 
 #ifdef __cplusplus
